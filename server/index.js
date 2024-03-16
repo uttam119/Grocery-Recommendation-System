@@ -3,7 +3,7 @@ const express = require('express');
 const chalk = require('chalk');
 const cors = require('cors');
 const helmet = require('helmet');
-
+const path = require("path");
 const keys = require('./config/keys');
 const routes = require('./routes');
 const socket = require('./socket');
@@ -25,7 +25,8 @@ app.use(cors());
 setupDB();
 require('./config/passport')(app);
 app.use(routes);
-
+// put the HTML file containing your form in a directory named "public" (relative to where this script is located)
+app.use("/images", express.static(path.join(__dirname, "./public")));
 const server = app.listen(port, () => {
   console.log(
     `${chalk.green('✓')} ${chalk.blue(
