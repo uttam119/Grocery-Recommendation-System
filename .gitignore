@@ -12,6 +12,8 @@ package.json.bak
 # config file
 .env
 
+#images
+public
 # debug
 npm-debug.log*
 yarn-debug.log*
