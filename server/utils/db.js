@@ -19,6 +19,7 @@ const setupDB = async () => {
         console.log(`${chalk.green('✓')} ${chalk.blue('MongoDB Connected!')}`)
       )
       .catch(err => console.log(err));
+
   } catch (error) {
     return null;
   }
