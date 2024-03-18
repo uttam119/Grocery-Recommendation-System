@@ -2,7 +2,7 @@ const setupDB = require('../utils/db');
 const Cart = require('../models/cart');
 const Product = require('../models/product');
 const apriori = require("../utils/fppattern");
-//setupDB()
+setupDB()
 
 const getProductsByUser = async () => {
     try {
@@ -38,6 +38,45 @@ const getProductsByUser = async () => {
                     user: "$user.email",
                     products: 1
                 }
+            },
+            {
+                $unwind: "$products"
+            },
+            {
+                $lookup: {
+                    from: "products", // assuming the name of the collection is 'products'
+                    localField: "products",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+            {
+                $unwind: "$productDetails"
+            },
+            {
+                $project: {
+                    day: 1,
+                    user: 1,
+                    products: {
+                        $concat: [
+                            { $toString: "$productDetails.sku" } // Convert SKU to string
+                        ]
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: { day: "$day", user: "$user" },
+                    products: { $addToSet: "$products" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    day: "$_id.day",
+                    user: "$_id.user",
+                    products: 1
+                }
             }
         ]);
         return result
@@ -64,12 +103,14 @@ const aprioriAlgo = async () => {
 
 const findFrequentOfAProduct = async (productId) => {
     const assocation = await aprioriAlgo();
+    const toFindProduct = await Product.findById(productId)
     console.log("Assocation is", assocation)
-    const productAssocation = assocation.find(assoc => assoc.antecedent.length === 1 && assoc.antecedent[0] === productId)
+    const productAssocation = assocation.find(assoc => assoc.antecedent.length === 1 && assoc.antecedent[0] === toFindProduct.sku)
     const frequentProducts = []
     if (productAssocation) {
         for (let item of productAssocation.consequent) {
-            const product = await Product.findById(item)
+            console.log("Item is ", item)
+            const product = await Product.findOne({ sku: item })
             frequentProducts.push(product)
         }
     }
@@ -78,4 +119,4 @@ const findFrequentOfAProduct = async (productId) => {
 }
 
 module.exports = findFrequentOfAProduct
-//findFrequentOfAProduct('65f6c68e02ba323e3cfee77d')
+findFrequentOfAProduct('65f6c68e02ba323e3cfee77d')
