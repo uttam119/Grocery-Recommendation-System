@@ -119,4 +119,3 @@ const findFrequentOfAProduct = async (productId) => {
 }
 
 module.exports = findFrequentOfAProduct
-findFrequentOfAProduct('65f6c68e02ba323e3cfee77d')
