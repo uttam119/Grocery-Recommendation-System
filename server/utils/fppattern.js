@@ -16,8 +16,8 @@ function apriori(D, minSup, minConf) {
         allAfterPruningCk.push(afterPruningCk);
 
         const counts = countItemsets(afterPruningCk, D);
-        allCounts.push(counts);
 
+        allCounts.push(counts);
         let Lk = filterByMinSup(counts, minSup);
         L.push(Lk);
         k++;
@@ -112,6 +112,7 @@ function getSubsets(itemset, k) {
 
 // return counts of itemsets
 function countItemsets(Ck, D) {
+    console.log("Counts is", Ck, D)
     let counts = {};
     for (let c of Ck) {
         counts[c] = 0;
@@ -167,7 +168,6 @@ function generateAssociationRules(L, allCounts, minConf) {
         // Generate all non-empty subsets of itemset
         for (let r = 1; r < itemset.length; r++) {
             const allNonEmptySubsets = getSubsets(itemset, r);
-
             for (let antecedent of allNonEmptySubsets) {
                 const consequent = itemset.filter(item => !antecedent.includes(item));
                 const antecedentCount = allCounts[antecedent.length - 1][antecedent.join(',')];
@@ -207,4 +207,4 @@ D = [
 
 minSup = 2
 
-console.log(apriori(D, minSup))
+module.exports = apriori

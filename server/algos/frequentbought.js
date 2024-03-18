@@ -1,0 +1,81 @@
+const setupDB = require('../utils/db');
+const Cart = require('../models/cart');
+const Product = require('../models/product');
+const apriori = require("../utils/fppattern");
+//setupDB()
+
+const getProductsByUser = async () => {
+    try {
+        console.log("Get products is called")
+        const result = await Cart.aggregate([
+            {
+                $unwind: "$products"
+            },
+            {
+                $group: {
+                    _id: {
+                        user: "$user",
+                        day: { $dateToString: { format: "%Y-%m-%d", date: "$created" } }
+                    },
+                    products: { $addToSet: "$products.product" }
+                }
+            },
+            {
+                $lookup: {
+                    from: "users", // assuming the name of the collection is 'users'
+                    localField: "_id.user",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $project: {
+                    _id: 0,
+                    day: "$_id.day",
+                    user: "$user.email",
+                    products: 1
+                }
+            }
+        ]);
+        return result
+    } catch (error) {
+        console.error("Error:", error);
+        throw error;
+    }
+}
+const SUPPORT_COUNT_PERCENTAGE = 0.4 // 40% percentage
+const aprioriAlgo = async () => {
+    console.log("Algo is called")
+    const productsByUsers = await getProductsByUser();
+    console.log("Products by users are", productsByUsers)
+
+    const candidateSets = productsByUsers.map(pr => pr.products.map(pr => `${pr}`));
+    const totalProducts = candidateSets.length
+
+    const supportCount = SUPPORT_COUNT_PERCENTAGE * totalProducts
+    console.log("Candidate sets are", candidateSets)
+    const association = apriori(candidateSets, 2)
+    return association
+}
+
+
+const findFrequentOfAProduct = async (productId) => {
+    const assocation = await aprioriAlgo();
+    console.log("Assocation is", assocation)
+    const productAssocation = assocation.find(assoc => assoc.antecedent.length === 1 && assoc.antecedent[0] === productId)
+    const frequentProducts = []
+    if (productAssocation) {
+        for (let item of productAssocation.consequent) {
+            const product = await Product.findById(item)
+            frequentProducts.push(product)
+        }
+    }
+    console.log("Product assocation is", frequentProducts)
+    return frequentProducts
+}
+
+module.exports = findFrequentOfAProduct
+//findFrequentOfAProduct('65f6c68e02ba323e3cfee77d')
