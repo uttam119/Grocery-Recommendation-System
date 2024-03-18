@@ -112,7 +112,6 @@ function getSubsets(itemset, k) {
 
 // return counts of itemsets
 function countItemsets(Ck, D) {
-    console.log("Counts is", Ck, D)
     let counts = {};
     for (let c of Ck) {
         counts[c] = 0;
