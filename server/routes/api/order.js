@@ -9,8 +9,19 @@ const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const mailgun = require('../../services/mailgun');
 const store = require('../../utils/store');
+const findFrequentOfAProduct = require("../../algos/frequentbought");
 const { ROLES, CART_ITEM_STATUS } = require('../../constants');
 
+
+router.get("/frequently-bought/:orderId", async (req, res) => {
+  try {
+    const orderId = req.params.orderId
+    const orders = await findFrequentOfAProduct(orderId)
+    res.status(200).send(orders)
+  } catch (err) {
+    res.status(400).send(err)
+  }
+})
 router.post('/add', auth, async (req, res) => {
   try {
     const cart = req.body.cartId;
@@ -312,9 +323,8 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
         return res.status(200).json({
           success: true,
           orderCancelled: true,
-          message: `${
-            req.user.role === ROLES.Admin ? 'Order' : 'Your order'
-          } has been cancelled successfully`
+          message: `${req.user.role === ROLES.Admin ? 'Order' : 'Your order'
+            } has been cancelled successfully`
         });
       }
 
