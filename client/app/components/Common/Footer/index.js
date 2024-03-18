@@ -47,17 +47,17 @@ const Footer = () => {
               <ul>{footerLinks}</ul>
             </div>
           </div>
-          <div className='footer-block'>
+          {/* <div className='footer-block'>
             <div className='block-title'>
               <h3 className='text-uppercase'>Links</h3>
             </div>
             <div className='block-content'>
               <ul>{footerLinks}</ul>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className='footer-copyright'>
-          <span>© {new Date().getFullYear()} MERN Store</span>
+          <span>© {new Date().getFullYear()} Khana Bazaar</span>
         </div>
         <ul className='footer-social-item'>
           <li>
