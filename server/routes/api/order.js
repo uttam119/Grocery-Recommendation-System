@@ -13,10 +13,10 @@ const findFrequentOfAProduct = require("../../algos/frequentbought");
 const { ROLES, CART_ITEM_STATUS } = require('../../constants');
 
 
-router.get("/frequently-bought/:orderId", async (req, res) => {
+router.get("/frequently-bought/:sku", async (req, res) => {
   try {
-    const orderId = req.params.orderId
-    const orders = await findFrequentOfAProduct(orderId)
+    const sku = req.params.sku
+    const orders = await findFrequentOfAProduct(sku)
     res.status(200).send(orders)
   } catch (err) {
     res.status(400).send(err)

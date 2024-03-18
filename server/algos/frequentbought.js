@@ -2,7 +2,6 @@ const setupDB = require('../utils/db');
 const Cart = require('../models/cart');
 const Product = require('../models/product');
 const apriori = require("../utils/fppattern");
-setupDB()
 
 const getProductsByUser = async () => {
     try {
@@ -101,11 +100,13 @@ const aprioriAlgo = async () => {
 }
 
 
-const findFrequentOfAProduct = async (productId) => {
+const findFrequentOfAProduct = async (sku) => {
+    console.log("Product is", sku)
     const assocation = await aprioriAlgo();
-    const toFindProduct = await Product.findById(productId)
-    console.log("Assocation is", assocation)
-    const productAssocation = assocation.find(assoc => assoc.antecedent.length === 1 && assoc.antecedent[0] === toFindProduct.sku)
+    console.log("Assocation is", assocation, sku)
+
+    const productAssocation = assocation.find(assoc => assoc.antecedent.length === 1 && assoc.antecedent[0] === `${sku}`)
+    console.log("Product association is", sku)
     const frequentProducts = []
     if (productAssocation) {
         for (let item of productAssocation.consequent) {
@@ -116,6 +117,8 @@ const findFrequentOfAProduct = async (productId) => {
     }
     console.log("Product assocation is", frequentProducts)
     return frequentProducts
+
+
 }
 
 module.exports = findFrequentOfAProduct
