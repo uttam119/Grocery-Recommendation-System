@@ -68,6 +68,7 @@ const seedProducts = async () => {
             name: 'DDC 500 ml Milk',
             slug: 'ddc_milk',
             description: 'DDC milk',
+            imageUrl: "ddc-image1.jpg",
             isActive: true,
             price: 10,
             brand: getBrandIdByName(brands, 'ddc_dairy')
@@ -120,7 +121,12 @@ const seedProducts = async () => {
     ];
     try {
         await Product.remove({});
-        await Product.insertMany(products);
+        await Product.insertMany(products.map(product => {
+            return {
+                ...product,
+
+            }
+        }));
         console.log('Products added');
     } catch (err) {
         console.log('Products addition error');
