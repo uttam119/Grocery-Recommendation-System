@@ -18,6 +18,7 @@ import NotFound from '../../components/Common/NotFound';
 import { BagIcon } from '../../components/Common/Icon';
 import ProductReviews from '../../components/Store/ProductReviews';
 import SocialShare from '../../components/Store/SocialShare';
+import FrequentlyBought from './FrequentlyBought';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {
@@ -39,6 +40,7 @@ class ProductPage extends React.PureComponent {
   }
 
   render() {
+    const slug = this.props.match.params.slug;
     const {
       isLoading,
       product,
@@ -67,11 +69,10 @@ class ProductPage extends React.PureComponent {
                 <div className='position-relative'>
                   <img
                     className='item-image'
-                    src={`${
-                      product.imageUrl
-                        ? product.imageUrl
-                        : '/images/placeholder-image.png'
-                    }`}
+                    src={`${product.imageUrl
+                      ? product.imageUrl
+                      : '/images/placeholder-image.png'
+                      }`}
                   />
                   {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
                     <p className='stock out-of-stock'>Out of stock</p>
@@ -80,6 +81,7 @@ class ProductPage extends React.PureComponent {
                   )}
                 </div>
               </Col>
+
               <Col xs='12' md='7' lg='7' className='mb-3 px-3 px-md-2'>
                 <div className='product-container'>
                   <div className='item-box'>
@@ -155,6 +157,7 @@ class ProductPage extends React.PureComponent {
                 </div>
               </Col>
             </Row>
+            <FrequentlyBought slug={slug} />
             <ProductReviews
               reviewFormData={reviewFormData}
               reviewFormErrors={reviewFormErrors}
