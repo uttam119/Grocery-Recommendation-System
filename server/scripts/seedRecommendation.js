@@ -8,7 +8,7 @@ const getProductIdByName = seed.getProductIdByName
 const seedUsers = seed.seedUsers
 const userByEmail = seed.userByEmail
 
-//3,4 and 5 start
+//3,4 and 5 star
 const addAmulMilkReviews = async (products, users) => {
     const reviews = [
         {
@@ -40,6 +40,7 @@ const addAmulMilkReviews = async (products, users) => {
     }
 }
 
+// 3 and 4. moderate review
 const addAmulButterReviews = async (products, users) => {
     const reviews = [
         {
@@ -65,6 +66,7 @@ const addAmulButterReviews = async (products, users) => {
     }
 }
 
+// 3 and 4. really good reviews
 const addSitaramDahiReviews = async (products, users) => {
     const reviews = [
         {

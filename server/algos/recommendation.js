@@ -12,7 +12,6 @@ const getAverage = (array) => {
     }
     return sum / array.length;
 }
-
 const linearInterpolation = (value, r1, r2) => {
     return (value - r1[0]) * (r2[1] - r2[0]) / (r1[1] - r1[0]) + r2[0];
 }
@@ -32,7 +31,7 @@ const getRatingAndSentimentScore = (reviews) => {
 }
 
 const getRecommendedProductsInCategory = async (categorySlug) => {
-    // await setupDB()
+    await setupDB()
     const category = await Category.findOne({ slug: `${categorySlug}` })
     const productsWithReviews = []
     console.log("Category is", category)
@@ -69,6 +68,8 @@ const getRecommendedProductsInCategory = async (categorySlug) => {
         if (isNaN(finalScore)) {
             finalScore = 0
         }
+        product.interpolatedRatingScore = interpolatedRatingScore
+        product.interpolatedSentimentScore = interpolatedSentimentScore
         product.finalScore = finalScore
     }
 
@@ -86,5 +87,5 @@ const getRecommendedProductsInCategory = async (categorySlug) => {
     return recommendedProducts.map(p => p.product)
 }
 
-//getRecommendedProductsInCategory("dairy")
+getRecommendedProductsInCategory("dairy")
 module.exports = getRecommendedProductsInCategory
