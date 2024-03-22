@@ -2400,6 +2400,7 @@ module.exports = {
     "pretending": -1,
     "pretends": -1,
     "pretty": 1,
+    "pretty good": 2,
     "prevent": -1,
     "prevented": -1,
     "preventing": -1,

@@ -16,8 +16,18 @@ const {
   getStoreProductsWishListQuery
 } = require('../../utils/queries');
 const { ROLES } = require('../../constants');
+const getRecommendedProductsInCategory = require("../../algos/recommendation");
 
 
+router.get("/recommended-products/:categoryslug", async (req, res) => {
+  try {
+    const slug = req.params.categoryslug;
+    const recommendedProducts = await getRecommendedProductsInCategory(slug);
+    res.status(200).send(recommendedProducts)
+  } catch (err) {
+    res.status(400).send(err)
+  }
+})
 // fetch product slug api
 router.get('/item/:slug', async (req, res) => {
   try {
