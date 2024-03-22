@@ -136,7 +136,7 @@ class Navigation extends React.PureComponent {
     };
 
     return (
-      <header className='header fixed-mobile-header'>
+      <header className='header fixed-mobile-header main-header' >
         {/* <div className='header-info'>
           <Container>
             <Row>
@@ -242,7 +242,7 @@ class Navigation extends React.PureComponent {
                       toggle={() => this.toggleBrand()}
                       isOpen={isBrandOpen}
                     >
-                      <DropdownToggle nav>
+                      <DropdownToggle nav className="text-white">
                         Brands
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
@@ -261,13 +261,14 @@ class Navigation extends React.PureComponent {
                       tag={ActiveLink}
                       to='/shop'
                       activeClassName='active'
+                      className="text-white"
                     >
                       Shop
                     </NavLink>
                   </NavItem>
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav>
+                      <DropdownToggle nav className="text-white">
                         {user.firstName ? user.firstName : 'Welcome'}
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
@@ -282,7 +283,7 @@ class Navigation extends React.PureComponent {
                     </UncontrolledDropdown>
                   ) : (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav>
+                      <DropdownToggle nav className="text-white">
                         Welcome!
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>

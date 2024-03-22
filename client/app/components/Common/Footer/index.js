@@ -36,12 +36,12 @@ const Footer = () => {
   ));
 
   return (
-    <footer className='footer'>
+    <footer className='footer main-header text-white'>
       <Container>
         <div className='footer-content'>
           <div className='footer-block'>
             <div className='block-title'>
-              <h3 className='text-uppercase'>Customer Service</h3>
+              <h3 className='text-uppercase text-white'>Customer Service</h3>
             </div>
             <div className='block-content'>
               <ul>{footerLinks}</ul>
@@ -57,7 +57,7 @@ const Footer = () => {
           </div> */}
         </div>
         <div className='footer-copyright'>
-          <span>© {new Date().getFullYear()} Khana Bazaar</span>
+          <span style={{color: "#eeeee4"}}>© {new Date().getFullYear()} Khana Bazaar</span>
         </div>
         <ul className='footer-social-item'>
           <li>

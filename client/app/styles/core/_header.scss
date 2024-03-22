@@ -73,7 +73,7 @@
   }
 
   .navbar {
-    background-color: $white !important;
+    background-color: #7FBA00 !important;
     justify-content: flex-end;
     padding: 0;
 
@@ -145,7 +145,7 @@
 
     .logo {
       margin: 0px;
-      color: $font-custom-color !important;
+      color: $white !important;
       @include media-breakpoint-up(md) {
         margin-left: 15px;
       }
