@@ -41,3 +41,5 @@ console.log(analyze("The product isn't good"))
 console.log(analyze("The product is good"))
 console.log(analyze("Don't buy it"))
 console.log(analyze("buy it"))
+
+module.exports = analyze
