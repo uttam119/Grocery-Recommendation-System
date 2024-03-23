@@ -12,6 +12,7 @@ import actions from '../../actions';
 import ProductList from '../../components/Store/ProductList';
 import NotFound from '../../components/Common/NotFound';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Recommendation from './Recommendation';
 
 class CategoryShop extends React.PureComponent {
   componentDidMount() {
@@ -42,6 +43,7 @@ class CategoryShop extends React.PureComponent {
         {!isLoading && products && products.length <= 0 && (
           <NotFound message='No products found.' />
         )}
+        <Recommendation slug={this.props.match.params.slug}/>
       </div>
     );
   }
