@@ -86,6 +86,7 @@ const getProductsByUser = async () => {
 }
 const SUPPORT_COUNT_PERCENTAGE = 0.4 // 40% percentage
 const aprioriAlgo = async () => {
+    await setupDB()
     console.log("Algo is called")
     const productsByUsers = await getProductsByUser();
     console.log("Products by users are", productsByUsers)
@@ -121,4 +122,5 @@ const findFrequentOfAProduct = async (sku) => {
 
 }
 
+//findFrequentOfAProduct("ktm_cornflakes")
 module.exports = findFrequentOfAProduct

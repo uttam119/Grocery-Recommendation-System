@@ -39,12 +39,15 @@ const getRecommendedProductsInCategory = async (categorySlug) => {
     for (const id of products) {
         const product = await Product.findById(id);
         const reviews = await Review.find({ product: id })
+        product.reviews = reviews
         const { averageRating, sentimentScore } = getRatingAndSentimentScore(reviews)
         productsWithReviews.push({
             product,
+            reviews,
             averageRating,
             sentimentScore
         })
+
     }
 
     const maxSentimentScore = Math.max(...productsWithReviews.map(o => o.sentimentScore))
@@ -71,6 +74,7 @@ const getRecommendedProductsInCategory = async (categorySlug) => {
         product.interpolatedRatingScore = interpolatedRatingScore
         product.interpolatedSentimentScore = interpolatedSentimentScore
         product.finalScore = finalScore
+
     }
 
 
@@ -84,7 +88,16 @@ const getRecommendedProductsInCategory = async (categorySlug) => {
     }
     // Normalize rating and sentiment score
     console.log("PRoducts are", recommendedProducts)
-    return recommendedProducts.map(p => p.product)
+    const output = recommendedProducts.map(p => ({
+        name: p.product.name,
+        slug: p.product.slug,
+        description: p.product.description,
+        imageUrl: p.product.imageUrl,
+        price: p.product.price,
+        totalReviews: p.reviews.length,
+        averageRating: p.averageRating
+    }))
+    return output
 }
 
 getRecommendedProductsInCategory("dairy")
