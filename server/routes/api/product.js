@@ -16,7 +16,7 @@ const {
   getStoreProductsWishListQuery
 } = require('../../utils/queries');
 const { ROLES } = require('../../constants');
-const getRecommendedProductsInCategory = require("../../algos/recommendation");
+const { getRecommendedProductsInCategory } = require("../../algos/recommendation");
 
 
 router.get("/recommended-products/:categoryslug", async (req, res) => {

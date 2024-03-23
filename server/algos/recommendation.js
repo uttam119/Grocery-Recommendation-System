@@ -33,9 +33,15 @@ const getRatingAndSentimentScore = (reviews) => {
 const getRecommendedProductsInCategory = async (categorySlug) => {
     await setupDB()
     const category = await Category.findOne({ slug: `${categorySlug}` })
-    const productsWithReviews = []
+
     console.log("Category is", category)
     const products = category.products
+    const output = await getRecommendedProducts(products)
+    return output
+}
+
+const getRecommendedProducts = async (products) => {
+    const productsWithReviews = []
     for (const id of products) {
         const product = await Product.findById(id);
         const reviews = await Review.find({ product: id })
@@ -99,6 +105,8 @@ const getRecommendedProductsInCategory = async (categorySlug) => {
     }))
     return output
 }
-
-getRecommendedProductsInCategory("dairy")
-module.exports = getRecommendedProductsInCategory
+//getRecommendedProductsInCategory("dairy")
+module.exports = {
+    getRecommendedProductsInCategory,
+    getRecommendedProducts
+}
