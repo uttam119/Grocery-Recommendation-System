@@ -20,7 +20,6 @@ const Recommendation = ({ slug }) => {
 
   if (data.length === 0) return null;
   let sliceData = data.slice(0, 4);
-  console.log(sliceData);
 
   return (
     <div className='product-container my-5'>
