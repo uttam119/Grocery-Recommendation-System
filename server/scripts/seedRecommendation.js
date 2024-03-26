@@ -2,7 +2,9 @@ const seed = require("./seed");
 const User = require('../models/user');
 const Product = require('../models/product');
 const Review = require("../models/review");
-const { REVIEW_STATUS } = require("../constants");
+const Cart = require('../models/cart');
+const Order = require('../models/order');
+const { REVIEW_STATUS, CART_ITEM_STATUS } = require("../constants");
 const seedProducts = seed.seedProducts
 const getProductIdByName = seed.getProductIdByName
 const seedUsers = seed.seedUsers
@@ -93,6 +95,136 @@ const addSitaramDahiReviews = async (products, users) => {
     }
 }
 
+
+const addUser1And2Transaction = async (products, users) => {
+    const carts = [
+        {
+            products: [
+                {
+                    product: getProductIdByName(products, 'safal_ghee'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'amul_butter'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'amrit_oil'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+            ],
+            user: userByEmail(users, 'user1@gmail.com')
+        },
+        {
+            products: [
+                {
+                    product: getProductIdByName(products, 'merokishan_tomato'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'haldiram_garammasala'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'europeanbakery_bread'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+            ],
+            user: userByEmail(users, 'user1@gmail.com')
+        },
+        {
+            products: [
+                {
+                    product: getProductIdByName(products, 'safal_ghee'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+
+                {
+                    product: getProductIdByName(products, 'amul_butter'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'amrit_oil'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+            ],
+            user: userByEmail(users, 'user2@gmail.com')
+        },
+        {
+            products: [
+                {
+                    product: getProductIdByName(products, 'merokishan_tomato'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'urban_sausage'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'local_eggs'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+            ],
+            user: userByEmail(users, 'user2@gmail.com')
+        },
+        {
+            products: [
+                {
+                    product: getProductIdByName(products, 'merokishan_tomato'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'urban_sausage'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'amul_butter'),
+                    quantity: 2,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+                {
+                    product: getProductIdByName(products, 'safal_ghee'),
+                    quantity: 1,
+                    status: CART_ITEM_STATUS.Delivered
+                },
+            ],
+            user: userByEmail(users, 'user3@gmail.com')
+        },
+
+    ]
+    await Cart.remove({});
+    await Order.remove({});
+    try {
+        for (let cart of carts) {
+            const cartDb = new Cart(cart);
+            await cartDb.save();
+            const order = new Order({
+                cart: cartDb.cart,
+                user: cartDb.user,
+                total: 100
+            });
+            await order.save();
+        }
+        console.log('Cart successfully added');
+    } catch (err) {
+        console.log('Cart addition error');
+    }
+}
+
 const seedDatabase = async () => {
     await seedProducts()
     await seedUsers()
@@ -102,6 +234,7 @@ const seedDatabase = async () => {
     await addAmulMilkReviews(products, users)
     await addAmulButterReviews(products, users)
     await addSitaramDahiReviews(products, users)
+    await addUser1And2Transaction(products, users)
 }
 
 seedDatabase()
