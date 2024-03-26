@@ -71,8 +71,10 @@ const calculateSimilarity = (arr1, arr2) => {
 
 const findSimilarProductsFromAggregation = (aggregatedProducts, email) => {
     const SIMILARITY_THRESHOLD = 50 // Percentage
+    const MINIMUM_BOUGHT = 2
     const currentUser = aggregatedProducts.find(p => p.user == email)
     const currentUserProducts = currentUser.products.map(p => `${p.slug}`)
+    if (currentUserProducts.length < MINIMUM_BOUGHT) return []
     console.log("Current user aggregated products are", currentUserProducts)
     const currentUserProductsSet = new Set(currentUserProducts)
     const output = []
