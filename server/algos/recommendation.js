@@ -89,9 +89,7 @@ const getRecommendedProducts = async (products) => {
     })
 
     // If product does not have any ratings or comments return nothing
-    if (recommendedProducts.length > 0 && recommendedProducts[0].finalScore === 0) {
-        return []
-    }
+
     // Normalize rating and sentiment score
     console.log("PRoducts are", recommendedProducts)
     const output = recommendedProducts.map(p => ({

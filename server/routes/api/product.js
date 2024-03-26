@@ -17,7 +17,19 @@ const {
 } = require('../../utils/queries');
 const { ROLES } = require('../../constants');
 const { getRecommendedProductsInCategory } = require("../../algos/recommendation");
+const getTailoredRecommendation = require("../../algos/tailored")
 
+
+
+router.get("/tailored-recommended/:useremail", async (req, res) => {
+  try {
+    const email = req.params.useremail
+    const recommendedProducts = await getTailoredRecommendation(email)
+    res.status(400).send(recommendedProducts)
+  } catch (err) {
+    res.status(400).send(err)
+  }
+})
 
 router.get("/recommended-products/:categoryslug", async (req, res) => {
   try {
