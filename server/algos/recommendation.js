@@ -2,7 +2,7 @@ const Category = require('../models/category');
 const Product = require('../models/product');
 const Review = require("../models/review");
 const setupDB = require('../utils/db');
-const analyze = require("../utils/sentiment/sentiment");
+const analyze = require("./sentiment/sentiment");
 
 const getAverage = (array) => {
     if (array.length === 0) return undefined

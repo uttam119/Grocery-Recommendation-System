@@ -62,7 +62,7 @@ const calculateSimilarity = (arr1, arr2) => {
     // Find the intersection of the sets
     const intersection = new Set([...set1].filter(value => set2.has(value)));
 
-    // Calculate similarity percentage based on arr1
+    // Calculate jaccard similarity percetage
     const similarityPercentage = (intersection.size / set1.size) * 100;
 
     // Return the similarity percentage
