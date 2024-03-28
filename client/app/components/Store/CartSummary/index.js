@@ -16,7 +16,7 @@ const CartSummary = props => {
       <Container>
         <Row className='mb-2 summary-item'>
           <Col xs='9'>
-            <p className='summary-label'>Free Shippling</p>
+            <p className='summary-label'>Free Shipping</p>
           </Col>
           <Col xs='3' className='text-right'>
             <p className='summary-value'>Rs.0</p>

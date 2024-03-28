@@ -25,7 +25,7 @@ router.get("/tailored-recommended/:useremail", async (req, res) => {
   try {
     const email = req.params.useremail
     const recommendedProducts = await getTailoredRecommendation(email)
-    res.status(400).send(recommendedProducts)
+    res.status(200).send(recommendedProducts)
   } catch (err) {
     res.status(400).send(err)
   }
