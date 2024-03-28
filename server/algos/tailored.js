@@ -2,7 +2,7 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 const { getRecommendedProducts } = require("../algos/recommendation")
 const setupDB = require('../utils/db');
-
+//setupDB()
 const aggregateProductsOfAllUser = async () => {
     try {
         const aggregatedData = await Cart.aggregate([
@@ -70,7 +70,7 @@ const calculateSimilarity = (arr1, arr2) => {
 }
 
 const findSimilarProductsFromAggregation = (aggregatedProducts, email) => {
-    const SIMILARITY_THRESHOLD = 50 // Percentage
+    const SIMILARITY_THRESHOLD = 80 // Percentage
     const MINIMUM_BOUGHT = 2
     const currentUser = aggregatedProducts.find(p => p.user == email)
     const currentUserProducts = currentUser.products.map(p => `${p.slug}`)
@@ -102,12 +102,12 @@ const getProductsSlugs = async (names) => {
 const getTailoredRecommendation = async (email) => {
     // await setupDB()
     const aggregatedProducts = await aggregateProductsOfAllUser()
+    console.log("Aggregated products are", aggregatedProducts)
     const similarProducts = findSimilarProductsFromAggregation(aggregatedProducts, email)
     const similarProductsIds = await getProductsSlugs(similarProducts)
     const recommendedProducts = getRecommendedProducts(similarProductsIds)
     return recommendedProducts
 
 }
-// getTailoredRecommendation("user3@gmail.com")
-
+//getTailoredRecommendation("user3@gmail.com")
 module.exports = getTailoredRecommendation

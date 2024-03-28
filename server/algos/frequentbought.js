@@ -2,7 +2,7 @@ const setupDB = require('../utils/db');
 const Cart = require('../models/cart');
 const Product = require('../models/product');
 const apriori = require("../utils/fppattern");
-
+//setupDB()
 const getProductsByUser = async () => {
     try {
         console.log("Get products is called")
