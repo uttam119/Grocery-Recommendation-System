@@ -21,9 +21,9 @@ const seedCartsAndOrders = async () => {
                 product: getProductIdByName(products, 'sitaram_dahi'),
                 quantity: 1,
                 status: CART_ITEM_STATUS.Delivered,
-                created: moment().subtract(90, 'days')
             }],
-            user: userByEmail(users, 'user1@gmail.com')
+            user: userByEmail(users, 'user1@gmail.com'),
+            created: "2024-01-03"
         },
         {
             products: [
@@ -38,7 +38,9 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user1@gmail.com')
+            user: userByEmail(users, 'user1@gmail.com'),
+            created: "2024-01-10"
+
         },
         // User 2
         {
@@ -54,7 +56,8 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user2@gmail.com')
+            user: userByEmail(users, 'user2@gmail.com'),
+            created: "2024-01-27"
         },
         // User 3
         {
@@ -75,7 +78,8 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user3@gmail.com')
+            user: userByEmail(users, 'user3@gmail.com'),
+            created: "2024-02-03"
         },
         // User 4
         {
@@ -86,7 +90,8 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user4@gmail.com')
+            user: userByEmail(users, 'user4@gmail.com'),
+            created: "2024-03-27"
         },
         // User 5
         {
@@ -97,7 +102,8 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user5@gmail.com')
+            user: userByEmail(users, 'user5@gmail.com'),
+            created: "2024-03-01"
         },
         // User 6
         {
@@ -108,7 +114,8 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user6@gmail.com')
+            user: userByEmail(users, 'user6@gmail.com'),
+            created: "2024-04-03"
         },
         {
             products: [
@@ -118,7 +125,8 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user6@gmail.com')
+            user: userByEmail(users, 'user6@gmail.com'),
+            created: "2024-04-10"
         },
         {
             products: [
@@ -128,7 +136,8 @@ const seedCartsAndOrders = async () => {
                     status: CART_ITEM_STATUS.Delivered
                 },
             ],
-            user: userByEmail(users, 'user6@gmail.com')
+            user: userByEmail(users, 'user6@gmail.com'),
+            created: "2024-04-13"
         }
     ]
     await Cart.remove({})
