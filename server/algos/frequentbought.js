@@ -11,17 +11,33 @@ const getProductsByUser = async () => {
                 $unwind: "$products"
             },
             {
+                $addFields: {
+                    createdDate: {
+                        $dateToString: {
+                            format: "%Y-%m",
+                            date: "$created"
+                        }
+                    }
+                }
+            },
+            {
                 $group: {
                     _id: {
                         user: "$user",
-                        day: { $dateToString: { format: "%Y-%m-%d", date: "$created" } }
+                        createdDate: {
+                            $concat: [
+                                { $substr: ["$createdDate", 0, 7] }, // Extract YYYY-MM
+                                "-", // Separator
+                                { $cond: [{ $lte: [{ $dayOfMonth: "$created" }, 15] }, "FirstHalf", "SecondHalf"] } // Determine FirstHalf or SecondHalf
+                            ]
+                        }
                     },
                     products: { $addToSet: "$products.product" }
                 }
             },
             {
                 $lookup: {
-                    from: "users", // assuming the name of the collection is 'users'
+                    from: "users",
                     localField: "_id.user",
                     foreignField: "_id",
                     as: "user"
@@ -33,7 +49,7 @@ const getProductsByUser = async () => {
             {
                 $project: {
                     _id: 0,
-                    day: "$_id.day",
+                    createdDate: "$_id.createdDate",
                     user: "$user.email",
                     products: 1
                 }
@@ -43,7 +59,7 @@ const getProductsByUser = async () => {
             },
             {
                 $lookup: {
-                    from: "products", // assuming the name of the collection is 'products'
+                    from: "products",
                     localField: "products",
                     foreignField: "_id",
                     as: "productDetails"
@@ -54,25 +70,25 @@ const getProductsByUser = async () => {
             },
             {
                 $project: {
-                    day: 1,
+                    createdDate: 1,
                     user: 1,
                     products: {
                         $concat: [
-                            { $toString: "$productDetails.sku" } // Convert SKU to string
+                            { $toString: "$productDetails.sku" }
                         ]
                     }
                 }
             },
             {
                 $group: {
-                    _id: { day: "$day", user: "$user" },
+                    _id: { createdDate: "$createdDate", user: "$user" },
                     products: { $addToSet: "$products" }
                 }
             },
             {
                 $project: {
                     _id: 0,
-                    day: "$_id.day",
+                    createdDate: "$_id.createdDate",
                     user: "$_id.user",
                     products: 1
                 }
@@ -122,5 +138,5 @@ const findFrequentOfAProduct = async (sku) => {
 
 }
 
-//findFrequentOfAProduct("ktm_cornflakes")
+//findFrequentOfAProduct("sitaram_dahi")
 module.exports = findFrequentOfAProduct
