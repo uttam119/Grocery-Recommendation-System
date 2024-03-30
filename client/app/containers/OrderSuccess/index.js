@@ -15,27 +15,7 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import axios from 'axios';
 import khaltiImg from './khalti.png'
 import { API_URL } from '../../constants';
-const options = {
-  'method': 'POST',
-  'url': 'http://a.khalti.com/api/v2/epayment/initiate/',
-  'headers': {
-    'Authorization': 'key live_secret_key_68791341fdd94846a146f0457ff7b455',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    "return_url": "http://localhost:8080",
-    "website_url": "https://localhost:8080",
-    "amount": "1000",
-    "purchase_order_id": "Order01",
-    "purchase_order_name": "test",
-    "customer_info": {
-      "name": "Ram Bahadur",
-      "email": "test@khalti.com",
-      "phone": "9800000001"
-    }
-  })
 
-};
 class OrderSuccess extends React.PureComponent {
   state = {
     paymentUrl: ""
