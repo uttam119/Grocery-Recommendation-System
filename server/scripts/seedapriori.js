@@ -6,6 +6,7 @@ const Category = require('../models/category');
 const Cart = require('../models/cart');
 const Order = require('../models/order');
 const setupDB = require('../utils/db');
+const moment = require("moment");
 const { CART_ITEM_STATUS } = require('../constants');
 setupDB();
 
@@ -221,7 +222,8 @@ const seedCartsAndOrders = async () => {
             products: [{
                 product: getProductIdByName(products, 'ddc_milk'),
                 quantity: 1,
-                status: CART_ITEM_STATUS.Delivered
+                status: CART_ITEM_STATUS.Delivered,
+
             }],
             user: userByEmail(users, 'user1@gmail.com')
         },

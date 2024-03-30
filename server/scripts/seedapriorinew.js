@@ -4,6 +4,7 @@ const Product = require('../models/product');
 const Review = require("../models/review");
 const Cart = require('../models/cart');
 const Order = require('../models/order');
+const moment = require("moment")
 const { REVIEW_STATUS, CART_ITEM_STATUS } = require("../constants");
 const seedProducts = seed.seedProducts
 const getProductIdByName = seed.getProductIdByName
@@ -19,7 +20,8 @@ const seedCartsAndOrders = async () => {
             products: [{
                 product: getProductIdByName(products, 'sitaram_dahi'),
                 quantity: 1,
-                status: CART_ITEM_STATUS.Delivered
+                status: CART_ITEM_STATUS.Delivered,
+                created: moment().subtract(90, 'days')
             }],
             user: userByEmail(users, 'user1@gmail.com')
         },

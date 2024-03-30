@@ -1,8 +1,8 @@
 const setupDB = require('../utils/db');
 const Cart = require('../models/cart');
 const Product = require('../models/product');
-const apriori = require("./apriori/fppattern");
-//setupDB()
+const apriori = require("../utils/fppattern");
+await setupDB
 const getProductsByUser = async () => {
     try {
         console.log("Get products is called")
@@ -122,5 +122,5 @@ const findFrequentOfAProduct = async (sku) => {
 
 }
 
-//findFrequentOfAProduct("ktm_cornflakes")
+findFrequentOfAProduct("ktm_cornflakes")
 module.exports = findFrequentOfAProduct
