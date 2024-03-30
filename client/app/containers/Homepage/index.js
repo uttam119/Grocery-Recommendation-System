@@ -49,7 +49,7 @@ class Homepage extends React.PureComponent {
             </div>
           </Col>
         </Row>
-        <Tailored useremail="user3@gmail.com" />
+        <Tailored />
       </div>
     );
   }
