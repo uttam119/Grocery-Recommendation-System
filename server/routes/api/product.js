@@ -5,6 +5,9 @@ const Mongoose = require('mongoose');
 
 // Bring in Models & Utils
 const Product = require('../../models/product');
+const Order = require('../../models/order');
+const Cart = require("../../models/cart");
+const User = require("../../models/user");
 const Brand = require('../../models/brand');
 const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
@@ -18,8 +21,55 @@ const {
 const { ROLES } = require('../../constants');
 const { getRecommendedProductsInCategory } = require("../../algos/recommendation");
 const getTailoredRecommendation = require("../../algos/tailored")
+const axios = require("axios")
 
+router.get("/make-payment/:orderId", async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId)
+    if (!order) res.status(400).send("Order id not found")
+    const user = await User.findById(order.user)
+    const cart = await Cart.findById(order.cart)
 
+    console.log("User is", cart)
+    let totalPrices = 0
+    cart.products.forEach(product => {
+      if (product.totalPrice) totalPrices += product.totalPrice
+    })
+    totalPrices = Math.max(1000, totalPrices * 100)
+    console.log("Total prices is", totalPrices)
+    const options = {
+      'method': 'POST',
+      'url': 'https://a.khalti.com/api/v2/epayment/initiate/',
+      'headers': {
+        'Authorization': 'key live_secret_key_68791341fdd94846a146f0457ff7b455',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "return_url": "http://localhost:8080",
+        "website_url": "https://localhost:8080",
+        "amount": `${totalPrices}`,
+        "purchase_order_id": "Order01",
+        "purchase_order_name": "Ascol Groceries",
+        "customer_info": {
+          "name": `${user.firstName} ${user.lastName}`,
+          "email": `${user.email}`,
+          "phone": "9800000001"
+        }
+      })
+
+    };
+
+    const output = await axios.post(options.url, options.body, {
+      headers: options.headers,
+    })
+    res.status(200).send(output.data.payment_url)
+  } catch (err) {
+    console.log("Payment error is", err)
+    res.status(400).send(err)
+  }
+
+})
 
 router.get("/tailored-recommended/:useremail", async (req, res) => {
   try {
