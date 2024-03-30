@@ -73,6 +73,7 @@ const findSimilarProductsFromAggregation = (aggregatedProducts, email) => {
     const SIMILARITY_THRESHOLD = 80 // Percentage
     const MINIMUM_BOUGHT = 2
     const currentUser = aggregatedProducts.find(p => p.user == email)
+    if (!currentUser) return []
     const currentUserProducts = currentUser.products.map(p => `${p.slug}`)
     if (currentUserProducts.length < MINIMUM_BOUGHT) return []
     console.log("Current user aggregated products are", currentUserProducts)
@@ -104,6 +105,7 @@ const getTailoredRecommendation = async (email) => {
     const aggregatedProducts = await aggregateProductsOfAllUser()
     console.log("Aggregated products are", aggregatedProducts)
     const similarProducts = findSimilarProductsFromAggregation(aggregatedProducts, email)
+    console.log("Similar products are", similarProducts)
     const similarProductsIds = await getProductsSlugs(similarProducts)
     const recommendedProducts = getRecommendedProducts(similarProductsIds)
     return recommendedProducts

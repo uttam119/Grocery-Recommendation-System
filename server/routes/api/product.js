@@ -24,6 +24,7 @@ const getTailoredRecommendation = require("../../algos/tailored")
 router.get("/tailored-recommended/:useremail", async (req, res) => {
   try {
     const email = req.params.useremail
+    console.log("Tailored is called")
     const recommendedProducts = await getTailoredRecommendation(email)
     res.status(200).send(recommendedProducts)
   } catch (err) {
