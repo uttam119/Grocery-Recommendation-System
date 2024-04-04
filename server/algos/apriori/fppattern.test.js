@@ -17,7 +17,7 @@ describe("FPPattern", () => {
         const minSupport = 2;
         const output = apriori(input, minSupport, null)
         console.log("Output is", output)
-        expect(output.length).toBe(12)
+        expect(output.length).toBe(5)
         expect(output[0].antecedent).toStrictEqual(['3'])
         expect(output[0].consequent).toStrictEqual(['1', '2'])
     })

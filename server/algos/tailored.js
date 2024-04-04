@@ -2,7 +2,7 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 const { getRecommendedProducts } = require("../algos/recommendation")
 const setupDB = require('../utils/db');
-//setupDB()
+setupDB()
 const aggregateProductsOfAllUser = async () => {
     try {
         const aggregatedData = await Cart.aggregate([
@@ -111,5 +111,5 @@ const getTailoredRecommendation = async (email) => {
     return recommendedProducts
 
 }
-//getTailoredRecommendation("user3@gmail.com")
+getTailoredRecommendation("user3@gmail.com")
 module.exports = getTailoredRecommendation
