@@ -3,7 +3,7 @@ function apriori(D, minSup, minConf) {
     let L = [];
     let result = findFrequentOneItemsets(D, minSup);
     let L1 = result.firstItemSet;
-    let allCounts = [result.counts]; // Including the counts from the first itemset
+    let allCounts = [result.counts]; // Including the counts from the first itemsets
     L.push(L1);
     let k = 2;
     let allBeforePruningCk = [];
