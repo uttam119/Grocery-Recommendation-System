@@ -1,4 +1,4 @@
-// main function
+// main functions
 function apriori(D, minSup, minConf) {
     let L = [];
     let result = findFrequentOneItemsets(D, minSup);
