@@ -51,17 +51,6 @@ $ npm install
 $ npm run dev
 ```
 
-## Simple build for production
-
-```
-$ npm run build
-```
-
-## Run build for production
-
-```
-$ npm start
-```
 
 
 ## Languages & tools
@@ -74,7 +63,7 @@ $ npm start
 
 - [React](https://reactjs.org/)
 
-- [Webpack](https://webpack.js.org/)
+
 
 
 
